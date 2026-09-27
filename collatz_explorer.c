@@ -32,9 +32,18 @@ void insert(long long num, long long steps)
         temp2->next = temp;
     }
 }
-void lookup(long long num)
+long long lookup(long long num)
 {
-    
+    long long index = hash(num);
+    struct entry *temp = table[index];
+    while(temp!=NULL)
+    {
+        if(temp->num==num)
+            return temp->steps;
+        else
+            temp=temp->next;
+    } 
+    return -1;
 }
 struct info
 {
