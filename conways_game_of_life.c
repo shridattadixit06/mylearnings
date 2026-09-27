@@ -1,5 +1,7 @@
 #include <stdio.h>
-int count_alive(int array[3][3], int row, int column)
+#define ROWS 10
+#define COLS 10
+int count_alive(int array[ROWS][COLS], int row, int column)
 {
     int count = 0;
 
@@ -9,7 +11,7 @@ int count_alive(int array[3][3], int row, int column)
         {
             if(m!=column || k!=row)
             {
-                if(k>=0 && k<3 && m>=0 && m<3)
+                if(k>=0 && k<ROWS && m>=0 && m<COLS)
                 {
                     if(array[k][m]==1)
                         count++;
@@ -19,7 +21,7 @@ int count_alive(int array[3][3], int row, int column)
     }
     return count;
 }
-int next_state(int array[3][3], int row, int column)
+int next_state(int array[ROWS][COLS], int row, int column)
 {
     int neighbors = count_alive(array, row, column);
 
@@ -40,47 +42,57 @@ int next_state(int array[3][3], int row, int column)
             return 0;
     }
 }
-void generate_next(int current[3][3], int next[3][3])
+void generate_next(int current[ROWS][COLS], int next[ROWS][COLS])
 {
-    for(int i = 0; i < 3; i++)
+    for(int i = 0; i < ROWS; i++)
     {
-        for(int j = 0; j < 3; j++)
+        for(int j = 0; j < COLS; j++)
         {
             next[i][j] = next_state(current, i, j);
         }
     }
 }
+void copy_grid(int source[ROWS][COLS], int destination[ROWS][COLS])
+{
+    for(int i = 0; i < ROWS; i++)
+    {
+        for(int j = 0; j < COLS; j++)
+        {
+            destination[i][j] = source[i][j];
+        }
+    }
+}
 int main()
 {
-    int a[3][3] = {
-        {0,0,0},
-        {1,1,1},
-        {0,0,0}
-    };
+    int current[ROWS][COLS] = {0};
+    int next[ROWS][COLS];
 
-    int b[3][3];
+    current[4][3] = 1;
+    current[4][4] = 1;
+    current[4][5] = 1;
 
-    generate_next(a, b);
-    generate_next(b, a);
-    for(int i = 0; i < 3; ++i)
+    for(int generation = 0; generation < 20; generation++)
     {
-        for(int j = 0; j < 3; ++j)
-        {
-            printf("%d ", b[i][j]);
-        }
+        printf("Generation %d\n", generation);
 
-        printf("\n");
+       for(int i = 0; i < ROWS; i++)
+        {
+            for(int j = 0; j < COLS; j++)
+            {
+                if(current[i][j]==1)
+                    printf("#");
+                else
+                    printf(".");
+            }
+
+            printf("\n");
+        }
+        generate_next(current, next);
+
+        copy_grid(next, current);
     }
+
     
-    for(int i = 0; i < 3; ++i)
-    {
-        for(int j = 0; j < 3; ++j)
-        {
-            printf("%d ", a[i][j]);
-        }
-
-        printf("\n");
-    }
 
     return 0;
 }
