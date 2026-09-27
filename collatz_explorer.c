@@ -1,4 +1,45 @@
 #include <stdio.h>
+#include <stdlib.h>
+#define TABLE_SIZE 10
+struct entry
+{
+    long long num,steps;
+    struct entry *next;
+};
+long long hash(long long num)
+{
+    return num%TABLE_SIZE;
+}
+struct entry *table[TABLE_SIZE];
+void insert(long long num, long long steps)
+{
+    long long index = hash(num);
+    struct entry *temp = (struct entry *)malloc(sizeof(struct entry));
+    temp->num = num;
+    temp->steps = steps;
+    temp->next = NULL;
+    if(table[index]==NULL)
+    {
+        table[index] = temp;
+    }
+    else
+    {
+        struct entry *temp2 = table[index];
+        while(temp2->next!=NULL)
+        {
+            temp2=temp2->next;
+        }
+        temp2->next = temp;
+    }
+}
+void lookup(long long num)
+{
+    
+}
+struct info
+{
+    long long num, steps, peak;
+};
 long long collatz_explorer(long long num, long long steps, long long *large)
 {
     if(num==1)
@@ -22,10 +63,7 @@ long long collatz_explorer_all(long long num, long long steps, long long *large)
     else
         return collatz_explorer_all(3*num+1,steps+1, large);
 }
-struct info
-{
-    long long num, steps, peak;
-};
+
 int main()
 {
     long long n = 10000, longest_seq=0,peak=0,peak_start,long_start,sum_seq_len=0,sum_peak=0; 
