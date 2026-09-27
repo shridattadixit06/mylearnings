@@ -67,9 +67,11 @@ int main()
     int current[ROWS][COLS] = {0};
     int next[ROWS][COLS];
 
-    current[4][3] = 1;
-    current[4][4] = 1;
-    current[4][5] = 1;
+    current[1][2] = 1;
+    current[2][3] = 1;
+    current[3][1] = 1;
+    current[3][2] = 1;
+    current[3][3] = 1;
 
     for(int generation = 0; generation < 20; generation++)
     {
