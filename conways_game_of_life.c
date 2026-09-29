@@ -42,6 +42,19 @@ int next_state(int array[ROWS][COLS], int row, int column)
             return 0;
     }
 }
+int count_population(int array[ROWS][COLS])
+{
+    int count=0;
+    for(int i=0;i<ROWS;++i)
+    {
+        for(int j=0;j<COLS;++j)
+        {
+            if(array[i][j]==1)
+                count++;
+        }
+    }
+    return count;
+}
 void generate_next(int current[ROWS][COLS], int next[ROWS][COLS])
 {
     for(int i = 0; i < ROWS; i++)
@@ -66,18 +79,22 @@ int main()
 {
     int current[ROWS][COLS] = {0};
     int next[ROWS][COLS];
-
-    current[1][2] = 1;
+    int population[20];
+    current[2][2] = 1;
     current[2][3] = 1;
-    current[3][1] = 1;
     current[3][2] = 1;
     current[3][3] = 1;
+
+    current[5][5] = 1;
+    current[5][6] = 1;
+    current[6][5] = 1;
+    current[6][6] = 1;
 
     for(int generation = 0; generation < 20; generation++)
     {
         printf("Generation %d\n", generation);
-
-       for(int i = 0; i < ROWS; i++)
+        population[generation] = count_population(current);
+        for(int i = 0; i < ROWS; i++)
         {
             for(int j = 0; j < COLS; j++)
             {
@@ -93,7 +110,11 @@ int main()
 
         copy_grid(next, current);
     }
-
+    printf("\nPopulation history:\n");
+    for(int i = 0; i < 20; i++)
+    {
+        printf("Generation %d: %d\n", i, population[i]);
+    }
     
 
     return 0;
