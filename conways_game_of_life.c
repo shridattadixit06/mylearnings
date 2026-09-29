@@ -75,11 +75,25 @@ void copy_grid(int source[ROWS][COLS], int destination[ROWS][COLS])
         }
     }
 }
+int check_identicals(int a[ROWS][COLS], int b[ROWS][COLS])
+{
+    for(int i=0;i<ROWS;++i)
+    {
+        for(int j=0;j<COLS;++j)
+        {
+            if(a[i][j]!=b[i][j])
+                return 0;
+        }
+    }
+    return 1;
+}
 int main()
 {
     int current[ROWS][COLS] = {0};
     int next[ROWS][COLS];
+    int original[ROWS][COLS];
     int population[20];
+    
     current[2][2] = 1;
     current[2][3] = 1;
     current[3][2] = 1;
@@ -89,9 +103,10 @@ int main()
     current[5][6] = 1;
     current[6][5] = 1;
     current[6][6] = 1;
-
+    copy_grid(current, original);
     for(int generation = 0; generation < 20; generation++)
     {
+
         printf("Generation %d\n", generation);
         population[generation] = count_population(current);
         for(int i = 0; i < ROWS; i++)
@@ -107,8 +122,15 @@ int main()
             printf("\n");
         }
         generate_next(current, next);
-
         copy_grid(next, current);
+
+        if(generation >= 1 && generation % 2 == 1)
+        {
+            if(check_identicals(original, current))
+                printf("Found period 2!\n");
+        }
+
+        printf("\n");
     }
     printf("\nPopulation history:\n");
     for(int i = 0; i < 20; i++)
