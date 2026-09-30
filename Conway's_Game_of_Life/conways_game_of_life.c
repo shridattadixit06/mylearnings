@@ -90,6 +90,14 @@ void randomize_grid(int array[ROWS][COLS], int density)
 }
 int main()
 {
+    FILE *file = fopen("conway's_GOF_results.csv", "w");
+
+    if (file == NULL)
+    {
+        printf("Could not open file\n");
+        return 1;
+    }
+    fprintf(file, "density,generation,average\n");
     srand(time(NULL));
     int current[ROWS][COLS] = {0};
     int next[ROWS][COLS];
@@ -117,8 +125,9 @@ int main()
             {
                 total += population[density/10-1][run][generation];
             }
-            printf("Density:%d ,Generation: %d ,Average: %d\n",density,generation,total/100);
+            fprintf(file,"%d,%d,%d\n",density,generation,total/100);
         }
     }
+    fclose(file);
     return 0;
 }
