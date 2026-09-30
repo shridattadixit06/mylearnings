@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #define ROWS 10
 #define COLS 10
 int count_alive(int array[ROWS][COLS], int row, int column)
@@ -87,22 +89,24 @@ int check_identicals(int a[ROWS][COLS], int b[ROWS][COLS])
     }
     return 1;
 }
+void randomize_grid(int array[ROWS][COLS])
+{
+    for(int i=0;i<ROWS;++i)
+    {
+        for(int j=0;j<COLS;++j)
+        {
+            array[i][j] = rand() % 2;
+        }
+    }
+}
 int main()
 {
+    srand(time(NULL));
     int current[ROWS][COLS] = {0};
     int next[ROWS][COLS];
     int original[ROWS][COLS];
     int population[20];
-    
-    current[2][2] = 1;
-    current[2][3] = 1;
-    current[3][2] = 1;
-    current[3][3] = 1;
-
-    current[5][5] = 1;
-    current[5][6] = 1;
-    current[6][5] = 1;
-    current[6][6] = 1;
+    randomize_grid(current);
     copy_grid(current, original);
     for(int generation = 0; generation < 20; generation++)
     {
