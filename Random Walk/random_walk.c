@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 
 #define WALKS 1000
 
@@ -13,7 +14,7 @@ int main()
 
     for(int k = 0; k < num_tests; ++k)
     {
-        int total_distance = 0;
+        long long total_distance = 0;
 
         for(int j = 0; j < WALKS; ++j)
         {
@@ -33,7 +34,8 @@ int main()
         double average_distance = (double)total_distance / WALKS;
 
         printf("Steps: %d\n", steps[k]);
-        printf("Average distance: %f\n\n", average_distance);
+        printf("Average distance: %f\n", average_distance);
+        printf("Random Walk ratio: %lf\n\n",average_distance/sqrt((double)steps[k]));
     }
     return 0;
 }
