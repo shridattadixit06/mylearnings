@@ -53,13 +53,13 @@ int main()
         for(int j=0;j<4;++j)
         {
             if(j==0)
-                var_sum_10+=average[i][j];
+                var_sum_10+=pow((average[i][j]-average_of_10),2);
             else if(j==1)
-                var_sum_100+=average[i][j];
+                var_sum_100+=pow((average[i][j]-average_of_100),2);
             else if(j==2)
-                var_sum_1000+=average[i][j];
+                var_sum_1000+=pow((average[i][j]-average_of_1000),2);
             else
-                var_sum_10000+=average[i][j];
+                var_sum_10000+=pow((average[i][j]-average_of_10000),2);
         }
     }
     double var_10 = var_sum_10/EXPERIMENTS;
