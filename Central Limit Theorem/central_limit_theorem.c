@@ -76,6 +76,10 @@ int main()
     printf("standard deviation of 100-rolls column = %lf\n",sd_100); 
     printf("standard deviation of 1000-rolls column = %lf\n",sd_1000); 
     printf("standard deviation of 10000-rolls column = %lf\n",sd_10000); 
+    
+    double mu = 3.5;
+    double sigma = sqrt(35.0 / 12.0);
+
     FILE *file = fopen("clt_results.csv", "w");
 
     if(file == NULL)
@@ -84,13 +88,13 @@ int main()
         return 1;
     }
 
-    fprintf(file, "rolls,average\n");
+    fprintf(file, "rolls,average,z\n");
 
     for(int i = 0; i < EXPERIMENTS; ++i)
     {
         for(int j = 0; j < 4; ++j)
         {
-            fprintf(file, "%d,%lf\n", rolls[j], average[i][j]);
+            fprintf(file, "%d,%lf,%lf\n", rolls[j], average[i][j],(average[i][j] - mu) / (sigma / sqrt(rolls[j])));
         }
     }
 
